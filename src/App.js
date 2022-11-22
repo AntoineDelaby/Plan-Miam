@@ -18,7 +18,6 @@ function App() {
       );
       const result = await data.json();
       setMeals(result);
-      console.log("Triggered")
     };
     fetchMeals();
   },[isListMealPage]);
@@ -27,7 +26,7 @@ function App() {
     <div className="App">
       <NavBar />
       <Routes>
-        <Route path="/" element={<RandomPlate />} />
+        <Route path="/" element={<RandomPlate meals={meals}/>} />
         <Route path="/listePlats" element={<MealList meals={meals}/>} />
         <Route path="/creerPlat" element={<CreateMeal />} />
         <Route path="*" element={<Error404 />} />

@@ -9,14 +9,17 @@ import { useEffect, useState } from "react";
 function App() {
   const [meals, setMeals] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [units, setUnits] = useState([]);
   const location = useLocation();
   let isListMealPage = location.pathname === "/listePlats";
   let isCreateMealPage = location.pathname === "/creerPlat";
 
+  const apiPath = "http://localhost:8888/";
+
   useEffect(() => {
     const fetchMeals = async () => {
       const data = await fetch(
-        "http://localhost:8888/meals"
+        `${apiPath}meals`
       );
       const result = await data.json();
       setMeals(result);
@@ -27,10 +30,15 @@ function App() {
   useEffect(() => {
     const fetchMeals = async () => {
       const data = await fetch(
-        "http://localhost:8888/ingredients"
+        `${apiPath}ingredients`
       );
       const result = await data.json();
       setIngredients(result);
+      const dataUnits = await fetch(
+        `${apiPath}units`
+      );
+      const resultUnits = await dataUnits.json();
+      setUnits(resultUnits);
     };
     fetchMeals();
   },[isCreateMealPage]);
@@ -41,7 +49,7 @@ function App() {
       <Routes>
         <Route path="/" element={<RandomPlate meals={meals}/>} />
         <Route path="/listePlats" element={<MealList meals={meals}/>} />
-        <Route path="/creerPlat" element={<CreateMeal ingredients={ingredients}/>} />
+        <Route path="/creerPlat" element={<CreateMeal ingredients={ingredients} units={units}/>} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </div>

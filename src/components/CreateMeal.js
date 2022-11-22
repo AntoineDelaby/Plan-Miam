@@ -26,10 +26,22 @@ export const CreateMeal = (props) => {
             Ajouter un ingrédient
             <br />
             <select>
+                <option disabled selected value> Ingrédient </option>
               {props.ingredients.map((element) => {
                 return (
                   <option key={element["INGREDIENT_NAME"]}>
                     {element["INGREDIENT_NAME"]}
+                  </option>
+                );
+              })}
+            </select>
+            <input type="text" name="newIngredientQuantity" placeholder="Quantité"/>
+            <select placeholder="Unité">
+                <option disabled selected value> Unité </option>
+              {props.units.map((element) => {
+                return (
+                  <option key={element["label"]}>
+                    {element["label"]}
                   </option>
                 );
               })}

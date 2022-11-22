@@ -10,7 +10,7 @@ export const MealList = (props) => {
             <input type="text" id="filterMeal" onChange={(e) => setFilter(e.target.value)} placeholder="Chercher un plat ..."></input>
             {props.meals.map((element) => {
                 if(element["PLATE_NAME"].toLowerCase().includes(filter.toLowerCase())) {
-                    return (<Meal meal={element}/> )
+                    return (<Meal key={element["PLATE_NAME"]} meal={element}/> )
                 }
                 return (<></>);
             })}

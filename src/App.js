@@ -8,13 +8,15 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [meals, setMeals] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
   const location = useLocation();
   let isListMealPage = location.pathname === "/listePlats";
+  let isCreateMealPage = location.pathname === "/creerPlat";
 
   useEffect(() => {
     const fetchMeals = async () => {
       const data = await fetch(
-        "http://192.168.1.35:8888/meals"
+        "http://localhost:8888/meals"
       );
       const result = await data.json();
       setMeals(result);
@@ -22,13 +24,24 @@ function App() {
     fetchMeals();
   },[isListMealPage]);
 
+  useEffect(() => {
+    const fetchMeals = async () => {
+      const data = await fetch(
+        "http://localhost:8888/ingredients"
+      );
+      const result = await data.json();
+      setIngredients(result);
+    };
+    fetchMeals();
+  },[isCreateMealPage]);
+
   return (
     <div className="App">
       <NavBar />
       <Routes>
         <Route path="/" element={<RandomPlate meals={meals}/>} />
         <Route path="/listePlats" element={<MealList meals={meals}/>} />
-        <Route path="/creerPlat" element={<CreateMeal />} />
+        <Route path="/creerPlat" element={<CreateMeal ingredients={ingredients}/>} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </div>

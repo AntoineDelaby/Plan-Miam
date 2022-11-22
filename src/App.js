@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 function App() {
   const [meals, setMeals] = useState([]);
   const location = useLocation();
+  let isListMealPage = location.pathname === "/listePlats";
 
   useEffect(() => {
     const fetchMeals = async () => {
@@ -16,12 +17,11 @@ function App() {
         "http://192.168.1.35:8888/meals"
       );
       const result = await data.json();
-      console.log("TRIGGERED");
-      console.log(result);
       setMeals(result);
+      console.log("Triggered")
     };
     fetchMeals();
-  },[location]);
+  },[isListMealPage]);
 
   return (
     <div className="App">

@@ -11,6 +11,15 @@
     margin: 5%;
 }
 
+.newMealIngredient {
+    width: 100%;
+    display: flex;
+}
+
+.newMealIngredient > button {
+    margin-left: 20px;
+}
+
 .createMealForm > label > input {
     margin: 20px;
     padding: 5px;

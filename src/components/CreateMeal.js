@@ -55,7 +55,11 @@ export const CreateMeal = (props) => {
             <ul>
               {mealIngredients.length
                 ? mealIngredients.map((element) => {
-                    return <li key={element}>{element.ingredient} {element.quantity} {element.unit}</li>;
+                    return (<div className="newMealIngredient"><li key={element}>{element.ingredient} {element.quantity} {element.unit}</li>
+                    <button onChange={(event) => {
+                        event.preventDefault();
+                        setMealIngredients((current) => [current.filter(current.ingredient === element.ingredient)])
+                    }}>supprimer</button></div>);
                   })
                 : ""}
             </ul>

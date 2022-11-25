@@ -5,14 +5,28 @@ import "../resources/css/CreateMeal.css";
 export const CreateMeal = (props) => {
     const [openPopup, setOpenPopup] = useState(false);
     const [newIngredient, setNewIngredient] = useState("");
-    const [ingredientList, setIngredientList] = useState([]);
-    const [mealName, setMealName] = useState("");
-    const [mealCookTime, setMealCookTime] = useState(0);
+    const [validInput, setValidInput] = useState(null);
+
+    const [mealName, setMealName] = useState(""); // Nom du nouveau plat
+    const [mealCookTime, setMealCookTime] = useState(0); // Temps de préparation du nouveau plat
+    const [receipe, setReceipe] = useState(0); // Recette du nouveau Plat
+    const [mealIngredients, setMealIngredients] = useState([]); // Liste des ingrédients du nouveau plat
+    const [addIngredient, setAddIngredient] = useState(""); // Choix de l'ingrédient
+    const [ingredientQuantity, setIngredientQuantity] = useState(""); // Quantité du nouvel ingrédient
+    const [ingredientUnit, setIngredientUnit] = useState(""); // Unité de la quantité du nouvel ingrédient
 
 
     useEffect(() => {
         document.title = "Créer Plat - PlanMiam";  
       }, []);
+
+    useEffect(() => {
+    if (isNaN(ingredientQuantity)) {
+        setValidInput(false);
+    } else {
+        setValidInput(true);
+    }
+    }, [ingredientQuantity]);
 
     return (
       <div className="createMeal">
@@ -39,16 +53,16 @@ export const CreateMeal = (props) => {
           <label>
             Liste des ingrédients
             <ul>
-              {ingredientList.length
-                ? ingredientList.map((element) => {
-                    return <li key={element}>{element}</li>;
+              {mealIngredients.length
+                ? mealIngredients.map((element) => {
+                    return <li key={element}>{element.ingredient} {element.quantity} {element.unit}</li>;
                   })
                 : ""}
             </ul>
           </label>
           <label>
             Ajouter un ingrédient
-            <select>
+            <select onChange={(event) => {setAddIngredient(event.target.value)}}>
               <option disabled selected value>
                 Ingrédient
               </option>
@@ -64,11 +78,11 @@ export const CreateMeal = (props) => {
               type="text"
               name="newIngredientQuantity"
               placeholder="Quantité"
+              onChange={(event) => {setIngredientQuantity(event.target.value)}}
             />
-            <select>
+            <select onChange={(event) => {setIngredientUnit(event.target.value)}}>
               <option disabled selected value>
-                {" "}
-                Unité{" "}
+                Unité
               </option>
               {props.units.map((element) => {
                 return (
@@ -76,6 +90,17 @@ export const CreateMeal = (props) => {
                 );
               })}
             </select>
+            <button onClick={(event) => {
+                event.preventDefault();
+                if(addIngredient != "" 
+                && ingredientQuantity != "" 
+                && !isNaN(ingredientQuantity) 
+                && ingredientUnit != "" 
+                && !isIngredientInList(mealIngredients, addIngredient)) {
+                    setMealIngredients([...mealIngredients, {"ingredient":addIngredient,
+                     "quantity":ingredientQuantity, "unit": ingredientUnit}])
+                }
+            }}>Ajouter</button>
           </label>
           <button
             onClick={(event) => {
@@ -116,4 +141,11 @@ export const CreateMeal = (props) => {
         </form>
       </div>
     );
+}
+
+function isIngredientInList(ingredientList, ingredient) {
+    for(let element in ingredientList) {
+        if(element.ingredient === ingredient.ingredient) return true;
+    }
+    return false;
 }

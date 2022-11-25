@@ -29,6 +29,18 @@
     outline: none;
 }
 
+.createMealForm > label > button {
+    width: 100px;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid #039dd0;
+    transition-duration: 0.2s;
+    margin: 0;
+    margin-top: 50px;
+    padding: 10px;
+    box-shadow: 0 9px #999;
+}
+
 input[type=submit] {
     width: 200px;
     background-color: white;
@@ -41,12 +53,12 @@ input[type=submit] {
     box-shadow: 0 9px #999;
 }
 
-input[type=submit]:hover {
+input[type=submit]:hover, .createMealForm > label > button:hover {
     background-color: #dfdede;
     border-color: #0fb6ee;
 }
 
-input[type=submit]:active {
+input[type=submit]:active, .createMealForm > label > button:active {
     border-color: #03609a;
     background-color: #bababa;
     box-shadow: 0 5px #666;

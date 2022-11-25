@@ -1,0 +1,38 @@
+.randomPlate {
+    padding: 5%;
+    text-align: center;
+}
+
+input {
+    padding: 10px;
+    width: 400px;
+    font-size: 20px;
+    border-bottom: 1px solid darkgray;
+    border-top: 1px solid darkgray;
+    border-left: none;
+    border-right: none;
+    outline: none;
+}
+
+.randButton {
+    margin-top: 5%;
+    font-size: 30px;
+    background-color: white;
+    border-radius: 20px;
+    border: 2px solid #039dd0;
+    transition-duration: 0.2s;
+    padding: 3%;
+    box-shadow: 0 9px #999;
+}
+
+.randButton:hover {
+    background-color: #dfdede;
+    border-color: #0fb6ee;
+}
+
+.randButton:active {
+    border-color: #03609a;
+    background-color: #bababa;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}

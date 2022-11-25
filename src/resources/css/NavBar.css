@@ -1,0 +1,51 @@
+@font-face {
+    font-family: customFont;
+    src: url(Inter-VariableFont_slnt\,wght.ttf);
+}
+
+* {
+    font-family: customFont;
+}
+
+.navBar {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #039dd0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    height: 50px;
+}
+
+.navBar li {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.navBar a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+}
+
+a:hover {
+    background-color: #0fb6ee;
+}
+
+a:active {
+    background-color: #03609a;
+}
+
+a:visited {
+    color: black;
+}

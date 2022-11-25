@@ -1,0 +1,12 @@
+@font-face {
+    font-family: customFont;
+    src: url(Inter-VariableFont_slnt\,wght.ttf);
+}
+
+* {
+    font-family: customFont;
+}
+
+html, body {
+    margin: 0;
+}

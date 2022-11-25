@@ -1,8 +1,13 @@
-import { useState } from "react";
-import {Meal} from "./Meal.js"
+import { useEffect, useState } from "react";
+import {Meal} from "./Meal.js";
+import '../resources/css/MealList.css'
 
 export const MealList = (props) => {
     const [filter, setFilter] = useState("");
+
+    useEffect(() => {
+        document.title = "Liste Plats - PlanMiam";  
+      }, []);
 
     return (
         <div className="mealList">

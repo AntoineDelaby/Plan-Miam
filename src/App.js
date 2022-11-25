@@ -5,8 +5,10 @@ import {NavBar} from "./components/NavBar.js";
 import {MealList} from "./components/MealList.js"
 import {CreateMeal} from "./components/CreateMeal.js"
 import { useEffect, useState } from "react";
+import './resources/css/App.css'
 
 function App() {
+
   const [meals, setMeals] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [units, setUnits] = useState([]);
@@ -28,7 +30,7 @@ function App() {
   },[isListMealPage]);
 
   useEffect(() => {
-    const fetchMeals = async () => {
+    const fetchIngredients = async () => {
       const data = await fetch(
         `${apiPath}ingredients`
       );
@@ -40,7 +42,7 @@ function App() {
       const resultUnits = await dataUnits.json();
       setUnits(resultUnits);
     };
-    fetchMeals();
+    fetchIngredients();
   },[isCreateMealPage]);
 
   return (
@@ -49,7 +51,7 @@ function App() {
       <Routes>
         <Route path="/" element={<RandomPlate meals={meals}/>} />
         <Route path="/listePlats" element={<MealList meals={meals}/>} />
-        <Route path="/creerPlat" element={<CreateMeal ingredients={ingredients} units={units}/>} />
+        <Route path="/creerPlat" element={<CreateMeal ingredients={ingredients} setIngredients={setIngredients} units={units}/>} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </div>

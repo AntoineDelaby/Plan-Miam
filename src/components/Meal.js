@@ -1,3 +1,5 @@
+import '../resources/css/Meal.css';
+
 export const Meal = (props) => {
     return (
         <div className="mealComponent">

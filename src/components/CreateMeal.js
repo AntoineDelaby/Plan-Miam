@@ -122,9 +122,12 @@ export const CreateMeal = (props) => {
               className="popupButton"
               onClick={(event) => {
                 event.preventDefault();
-                fetch(
-                    `http://localhost:8888/ingredients/${newIngredient}`
-                  ).then(res => console.log(res));
+                fetch(`http://localhost:8888/ingredients/${newIngredient}`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                  });
                 props.setIngredients([...props.ingredients, {"INGREDIENT_NAME":newIngredient}]);
                 setOpenPopup(false);
               }}

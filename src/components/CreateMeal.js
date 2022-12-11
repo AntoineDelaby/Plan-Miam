@@ -1,16 +1,24 @@
 import { useEffect, useState } from "react";
 import { CreateIngredientPopup } from "./CreateIngredientPopup";
 import "../resources/css/CreateMeal.css";
+import { useNavigate } from "react-router-dom";
 
 export const CreateMeal = (props) => {
+    const navigate = useNavigate(); // Pour faire une redirection une fois le plat créé
     const [openPopup, setOpenPopup] = useState(false);
     const [newIngredient, setNewIngredient] = useState("");
     const [validInput, setValidInput] = useState(null);
 
     const [mealName, setMealName] = useState(""); // Nom du nouveau plat
     const [mealCookTime, setMealCookTime] = useState(0); // Temps de préparation du nouveau plat
-    const [receipe, setReceipe] = useState(0); // Recette du nouveau Plat
+    const [mealReceipe, setMealReceipe] = useState(0); // Recette du nouveau Plat
     const [mealIngredients, setMealIngredients] = useState([]); // Liste des ingrédients du nouveau plat
+    // Corps de chaque mealIngredient de mealIngredients : 
+    //{
+    //  "ingredient":nom de l'ingrédient,
+    //  "quantity":quantité de l'ingrédient,
+    //  "unit": unité de l'ingrédient
+    //}
     const [addIngredient, setAddIngredient] = useState(""); // Choix de l'ingrédient
     const [ingredientQuantity, setIngredientQuantity] = useState(""); // Quantité du nouvel ingrédient
     const [ingredientUnit, setIngredientUnit] = useState(""); // Unité de la quantité du nouvel ingrédient
@@ -28,25 +36,47 @@ export const CreateMeal = (props) => {
     }
     }, [ingredientQuantity]);
 
+    const handleSubmit = (event) => {
+      event.preventDefault();
+       fetch(`http://localhost:8888/meal`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            newMeal: {
+              name: mealName,
+              cooktime: mealCookTime,
+              recipe: mealReceipe,
+              ingredients: mealIngredients
+            }
+        })
+      });
+    };
+
     return (
       <div className="createMeal">
         <h1>Créer un plat</h1>
-        <form className="createMealForm">
+        <form className="createMealForm" onSubmit={event => {
+          handleSubmit(event);
+          navigate('/listePlats');
+          }}>
           <label>
             Nom du plat
-            <input type="text" name="mealName" placeholder="Welsh" />
+            <input type="text" name="mealName" placeholder="Welsh" onChange={event => setMealName(event.target.value)}/>
           </label>
           <label>
             Temps de préparation
-            <input type="text" name="cookTime" placeholder="45" />
+            <input type="text" name="cookTime" placeholder="45" onChange={event => setMealCookTime(event.target.value)}/>
             min(s)
           </label>
           <label>
             Recette
             <input
               type="text"
-              name="receipe"
+              name="recipe"
               placeholder="Déguster un bon Welsh !"
+              onChange={event => setMealReceipe(event.target.value)}
             />
           </label>
           <hr/>
@@ -95,11 +125,10 @@ export const CreateMeal = (props) => {
               })}
             </select>
             <button onClick={(event) => {
-                event.preventDefault();
-                if(addIngredient != "" 
-                && ingredientQuantity != "" 
+                event.preventDefault();if(addIngredient !== "" 
+                && ingredientQuantity !== "" 
                 && !isNaN(ingredientQuantity) 
-                && ingredientUnit != "" 
+                && ingredientUnit !== "" 
                 && !isIngredientInList(mealIngredients, addIngredient)) {
                     setMealIngredients([...mealIngredients, {"ingredient":addIngredient,
                      "quantity":ingredientQuantity, "unit": ingredientUnit}])
@@ -151,8 +180,10 @@ export const CreateMeal = (props) => {
 }
 
 function isIngredientInList(ingredientList, ingredient) {
-    for(let element in ingredientList) {
-        if(element.ingredient === ingredient.ingredient) return true;
+    for(let i = 0; i < ingredientList.length; i++) {
+        if(ingredientList[i].ingredient === ingredient){
+            return true;
+        };
     }
     return false;
 }
